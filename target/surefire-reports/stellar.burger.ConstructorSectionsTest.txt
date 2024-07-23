@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: stellar.burger.ConstructorSectionsTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.638 s - in stellar.burger.ConstructorSectionsTest
