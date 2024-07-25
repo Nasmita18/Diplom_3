@@ -11,7 +11,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import stellar.burger.helper.RegistrationHelper;
 import stellar.burger.pages.LoginPage;
 import stellar.burger.pages.MainPage;
-import stellar.burger.pages.RegistrationPage;
 
 import java.time.Duration;
 

@@ -22,9 +22,6 @@ public class AccountPageTest {
     private WebDriverWait wait;
     private MainPage mainPage;
     private LoginPage loginPage;
-//    private RegistrationPage registrationPage;
-//
-//    private String accessToken;
 
     @Before
     public void setUp() {
@@ -35,7 +32,6 @@ public class AccountPageTest {
 
         mainPage = new MainPage(driver, wait);
         loginPage = new LoginPage(driver, wait);
-//        registrationPage = new RegistrationPage(driver, wait);
     }
 
     @Test

@@ -44,4 +44,25 @@ public class RegistrationHelper {
                     .statusCode(202);
         }
     }
+
+    // Получаем accessToken для удаления пользователя
+    public static String getAccessToken(String email, String password, String name) {
+        UserRq userRq = new UserRq(email, password, name);
+        Response response = RestAssured.given()
+                .contentType("application/json")
+                .body(userRq)
+                .post("/api/auth/login");
+
+        UserRs userRs = response.as(UserRs.class);
+        return userRs.getAccessToken();
+    }
+
+    // Удаление зарегистрированного пользователя, если он существует
+    public static void removeUser(String token) {
+        if (token != null) {
+            RestAssured.given()
+                    .header("Authorization", token)
+                    .delete("/api/auth/user");
+        }
+    }
 }

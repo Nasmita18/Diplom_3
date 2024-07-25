@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import stellar.burger.helper.RegistrationHelper;
 import stellar.burger.pages.LoginPage;
 import stellar.burger.pages.MainPage;
 import stellar.burger.pages.RegistrationPage;
@@ -23,6 +24,7 @@ public class RegistrationTest {
     private MainPage mainPage;
     private LoginPage loginPage;
     private RegistrationPage registrationPage;
+    private String accessToken;
 
     @Before
     public void setUp() {
@@ -61,6 +63,9 @@ public class RegistrationTest {
 
         // Ожидание перехода на страницу авторизации
         wait.until(ExpectedConditions.urlContains("/login"));
+
+        //получаем аксестокен
+        accessToken = RegistrationHelper.getAccessToken(email, password, name);
 
         // Ввод логина и пароля
         loginPage.enterEmail(email);
@@ -108,6 +113,9 @@ public class RegistrationTest {
 
     @After
     public void tearDown() {
+        // Удаление зарегистрированного пользователя, если он существует
+        RegistrationHelper.removeUser(accessToken);
+
         if (driver != null) {
             driver.quit();
         }

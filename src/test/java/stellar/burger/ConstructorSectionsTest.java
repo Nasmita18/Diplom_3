@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -13,6 +14,7 @@ import stellar.burger.pages.MainPage;
 
 import java.time.Duration;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ConstructorSectionsTest {
@@ -35,38 +37,57 @@ public class ConstructorSectionsTest {
 
     @Test
     public void testNavigateToFillingsSection() {
-        // Переход к разделу "Начинки"
+        // смотрим что начальное состояние начинки неактивно
+        WebElement fillingsTab = driver.findElement(By.xpath("//span[text()='Начинки']/.."));
+        String initialClass = fillingsTab.getAttribute("class");
+        assertFalse(initialClass.contains("tab_tab_type_current__2BEPc"));
+
+        // Переходим к разделу нажчинки
         mainPage.clickFillingsTab();
 
-        // Ожидание появления элемента с заголовком "Начинки"
+        // ждем появления элемента с заголовком начинки
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h2[text()='Начинки']")));
         assertTrue(driver.findElement(By.xpath("//h2[text()='Начинки']")).isDisplayed());
+
+        // смотрим что раздел начинки активен
+        String finalClass = fillingsTab.getAttribute("class");
+        assertTrue("Expected 'Начинки' tab to be active", finalClass.contains("tab_tab_type_current__2BEPc"));
     }
 
     @Test
     public void testNavigateToSaucesSection() {
+        WebElement saucesTab = driver.findElement(By.xpath("//span[text()='Соусы']/.."));
+        String initialClass = saucesTab.getAttribute("class");
+        assertFalse( initialClass.contains("tab_tab_type_current__2BEPc"));
         // Переход к разделу "Соусы"
         mainPage.clickSaucesTab();
 
         // Ожидание появления элемента с заголовком "Соусы"
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h2[text()='Соусы']")));
         assertTrue(driver.findElement(By.xpath("//h2[text()='Соусы']")).isDisplayed());
+
+        String finalClass = saucesTab.getAttribute("class");
+        assertTrue("Expected 'Булки' tab to be active", finalClass.contains("tab_tab_type_current__2BEPc"));
     }
 
     @Test
     public void testNavigateToBunsSection() {
-        // Переход к разделу "Начинки"
-        mainPage.clickFillingsTab();
+        mainPage.clickSaucesTab();
+        // смотрим что начальное состояние булки неактивно
+        WebElement bunsTab = driver.findElement(By.xpath("//span[text()='Булки']/.."));
+        String initialClass = bunsTab.getAttribute("class");
+        assertFalse(initialClass.contains("tab_tab_type_current__2BEPc"));
 
-        // Ожидание появления элемента с заголовком "Начинки"
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h2[text()='Начинки']")));
-
-        // Переход к разделу "Булки"
+        // Переходим к разделу "Булки"
         mainPage.clickBunsTab();
 
-        // Ожидание появления элемента с заголовком "Булки"
+        // Ждем появления элемента "Булки"
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//h2[text()='Булки']")));
         assertTrue(driver.findElement(By.xpath("//h2[text()='Булки']")).isDisplayed());
+
+        // Смотрим, что раздел "Булки активен
+        String finalClass = bunsTab.getAttribute("class");
+        assertTrue("Expected 'Булки' tab to be active", finalClass.contains("tab_tab_type_current__2BEPc"));
     }
 
     @After
